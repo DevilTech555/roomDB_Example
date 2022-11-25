@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.deviltech.roomdb_example.fragments.ToDoListFragment;
 import com.deviltech.roomdb_example.persistancedb.database.AppDatabase;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setUpButtons();
         setUpDB();
+        loadToDoList();
     }
 
     @SuppressLint("SetTextI18n")
@@ -65,14 +68,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadFragment(int containerId, Fragment fragment){
+    private void loadFragment(int containerId, Fragment fragment, Object object, String key){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (null != object) {
+            Bundle transactionData = new Bundle();
+            transactionData.putParcelable(key, (Parcelable) object);
+            fragment.setArguments(transactionData);
+        }
         fragmentTransaction.replace(containerId, fragment);
+        fragmentTransaction.commit();
     }
 
     private void loadToDoList(){
-
-
+        loadFragment(R.id.fragment_container_view, new ToDoListFragment(), null, null);
     }
 }

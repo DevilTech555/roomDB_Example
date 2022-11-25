@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00FFFFFF"
-    tools:context=".fragments.to_do_list_fragment">
+    tools:context=".fragments.ToDoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/to_do_recycler_view"

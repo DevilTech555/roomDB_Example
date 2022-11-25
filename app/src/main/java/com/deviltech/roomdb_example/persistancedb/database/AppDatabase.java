@@ -7,13 +7,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.deviltech.roomdb_example.persistancedb.dao.ToDoItemDao;
-import com.deviltech.roomdb_example.persistancedb.dao.UserDao;
-import com.deviltech.roomdb_example.persistancedb.entities.User;
+import com.deviltech.roomdb_example.persistancedb.entities.ToDoItem;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {ToDoItem.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract UserDao userDao();
+    public abstract ToDoItemDao toDoItemDao();
 
     public static AppDatabase INSTANCE;
 

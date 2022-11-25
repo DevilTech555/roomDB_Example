@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface ToDoItemDao {
 
-    @Query("SELECT * FROM ToDoItem")
+    @Query("SELECT * FROM todoitem")
     List<ToDoItem> getAll();
 
     @Insert

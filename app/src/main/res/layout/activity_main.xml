@@ -61,7 +61,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
-        android:name="com.deviltech.roomdb_example.fragments.to_do_list_fragment"
+        android:name="com.deviltech.roomdb_example.fragments.ToDoListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
