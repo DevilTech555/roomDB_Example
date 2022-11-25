@@ -23,4 +23,7 @@ public interface ToDoItemDao {
 
     @Delete
     void delete(ToDoItem toDoItem);
+
+    @Query("DELETE FROM todoitem")
+    void deleteAll();
 }

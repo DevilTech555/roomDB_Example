@@ -1,4 +1,4 @@
-package com.deviltech.roomdb_example;
+package com.deviltech.roomdb_example.activies;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.deviltech.roomdb_example.R;
 import com.deviltech.roomdb_example.fragments.ToDoListFragment;
 import com.deviltech.roomdb_example.persistancedb.database.AppDatabase;
 import com.google.android.material.navigation.NavigationView;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "Working");
+                appDatabase.toDoItemDao().deleteAll();
             }
         });
     }
