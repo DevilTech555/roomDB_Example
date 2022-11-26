@@ -1,11 +1,10 @@
 package com.deviltech.roomdb_example.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,8 +28,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
         this.itemList = itemList;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void udpateList(List<ToDoItem> itemList){
+    public void updateList(List<ToDoItem> itemList){
         this.itemList.clear();
         this.itemList = itemList;
         notifyDataSetChanged();
@@ -38,14 +36,15 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
 
     @NonNull
     @Override
-    public ToDoListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todolistitem, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.todolistitem, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ToDoListAdapter.ViewHolder holder, int position) {
-        holder.description.setText(itemList.get(position).getDescription());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.descriptionTextView.setText(itemList.get(position).getDescription());
     }
 
     @Override
@@ -59,13 +58,11 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView description;
+        private final TextView descriptionTextView;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            LayoutInflater inflater = LayoutInflater.from(view.getContext());
-            View child = inflater.inflate(R.layout.todolistitem, null);
-            description = child.findViewById(R.id.to_do_description);
+            descriptionTextView = view.findViewById(R.id.to_do_description);
         }
 
         @Override

@@ -6,25 +6,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.deviltech.roomdb_example.R;
 import com.deviltech.roomdb_example.adapter.ToDoListAdapter;
+import com.deviltech.roomdb_example.interfaces.PopupWindowOnClickLisneters;
 import com.deviltech.roomdb_example.persistancedb.database.AppDatabase;
 import com.deviltech.roomdb_example.persistancedb.entities.ToDoItem;
+import com.deviltech.roomdb_example.popupwindow.AddTaskPopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoListFragment extends Fragment {
 
     private static final String TAG = "TODOLIST";
     private static final String TEST = "TDK";
-    public static final String METADATAKEY = "metadatakey";
 
     private View rootView;
     private RecyclerView to_do_list;
@@ -64,8 +63,15 @@ public class ToDoListFragment extends Fragment {
         this.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appDatabase.toDoItemDao().insert(new ToDoItem("Do the work...!", false));
-                updateList();
+                AddTaskPopupWindow addTaskPopupWindow = new AddTaskPopupWindow();
+                addTaskPopupWindow.showPopupWindow(v, new PopupWindowOnClickLisneters() {
+                    @Override
+                    public void onClickAdd(View v, Object data) {
+                        ToDoItem toDoItem = (ToDoItem) data;
+                        appDatabase.toDoItemDao().insert(toDoItem);
+                        updateList();
+                    }
+                });
             }
         });
     }
@@ -80,6 +86,6 @@ public class ToDoListFragment extends Fragment {
 
     private void updateList(){
         List<ToDoItem> items = appDatabase.toDoItemDao().getAll();
-        toDoListAdapter.udpateList(items);
+        toDoListAdapter.updateList(items);
     }
 }
