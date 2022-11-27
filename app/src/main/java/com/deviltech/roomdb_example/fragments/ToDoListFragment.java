@@ -1,14 +1,13 @@
 package com.deviltech.roomdb_example.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.deviltech.roomdb_example.R;
 import com.deviltech.roomdb_example.adapter.ToDoListAdapter;
@@ -20,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ToDoListFragment extends Fragment {
+public class ToDoListFragment extends Fragment implements ToDoListAdapter.ToDoListOnClickListener {
 
     private static final String TAG = "TODOLIST";
     private static final String TEST = "TDK";
@@ -79,7 +78,8 @@ public class ToDoListFragment extends Fragment {
     private void setUpAdapter() {
         List<ToDoItem> items = appDatabase.toDoItemDao().getAll();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        toDoListAdapter = new ToDoListAdapter(getContext(), items);
+        toDoListAdapter = new ToDoListAdapter(items);
+        toDoListAdapter.setItemClick(this);
         to_do_list.setLayoutManager(layoutManager);
         to_do_list.setAdapter(toDoListAdapter);
     }
@@ -87,5 +87,16 @@ public class ToDoListFragment extends Fragment {
     private void updateList(){
         List<ToDoItem> items = appDatabase.toDoItemDao().getAll();
         toDoListAdapter.updateList(items);
+    }
+
+    @Override
+    public void onClickCheckBox(ToDoItem data) {
+        appDatabase.toDoItemDao().update(data);
+    }
+
+    @Override
+    public void onLongPress(ToDoItem data) {
+        appDatabase.toDoItemDao().delete(data);
+        updateList();
     }
 }
