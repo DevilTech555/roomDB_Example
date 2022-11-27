@@ -1,6 +1,8 @@
 package com.deviltech.roomdb_example.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +91,27 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
 
         @Override
         public boolean onLongClick(View view) {
-            this.toDoListOnClickListener.onLongPress(toDoItem);
+            AlertDialog.Builder alertMessage = new AlertDialog.Builder(view.getContext());
+            alertMessage.setMessage("Are you sure do you want to delete it.....!");
+            alertMessage.setCancelable(true);
+            alertMessage.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            toDoListOnClickListener.onLongPress(toDoItem);
+                            dialog.cancel();
+                        }
+                    });
+
+            alertMessage.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = alertMessage.create();
+            alert.show();
             return false;
         }
     }
